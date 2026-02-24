@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CLAW.HORSE — The Free Claw Machine Game</title>
+<meta name="description" content="Play the free online claw machine game! Grab SPUNK runes, ordinal tokens, bonus plays and more. No download, no signup. 5 free plays daily. Horse racing themed arcade fun.">
+<meta name="keywords" content="free claw machine game online, claw machine simulator, arcade claw game, free online arcade, claw grabber game, win prizes online, SPUNK runes, ordinal tokens, horse racing game">
+<meta name="author" content="Spunk Network">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+<meta name="googlebot" content="index, follow">
+<meta name="theme-color" content="#1a5f1a">
+<link rel="canonical" href="https://claw.horse">
+<link rel="sitemap" type="application/xml" href="/sitemap.xml">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐴</text></svg>">
+<meta property="og:type" content="website">
+<meta property="og:title" content="CLAW.HORSE — The Free Claw Machine Game">
+<meta property="og:description" content="Free online claw machine game. Grab SPUNK runes, ordinals, bonus plays and more. 5 free plays daily. No signup needed.">
+<meta property="og:url" content="https://claw.horse">
+<meta property="og:site_name" content="Claw.Horse">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="CLAW.HORSE — The Free Claw Machine Game">
+<meta name="twitter:description" content="Free online claw machine. Grab SPUNK runes, ordinals, bonus plays & more. 5 free plays daily!">
+<meta name="twitter:site" content="@SpunkArt13">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"CLAW.HORSE","url":"https://claw.horse","description":"Free online claw machine game. Grab SPUNK runes, ordinal tokens, bonus plays and more. 5 free plays daily.","applicationCategory":"GameApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"creator":{"@type":"Organization","name":"Spunk Network","url":"https://spunk.bet"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is CLAW.HORSE free to play?","acceptedAnswer":{"@type":"Answer","text":"Yes! You get 5 free plays every day. No signup, no download, no payment required."}},{"@type":"Question","name":"What prizes can I win?","acceptedAnswer":{"@type":"Answer","text":"You can win SPUNK runes, ordinal tokens, free tool access at spunk.codes, and bonus plays."}},{"@type":"Question","name":"How does the claw machine work?","acceptedAnswer":{"@type":"Answer","text":"The claw moves left and right automatically. Click the Drop button to release it at the right moment. If the claw grabs a prize, you win!"}}]}
+</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#0a0f0a;--surface:#0f1a0f;--surface2:#132013;--border:#1a3a1a;
+  --text:#e4e8e4;--muted:#6a7a6a;--accent:#1a5f1a;--accent-light:#2a8f2a;
+  --gold:#ffd700;--gold-dim:#b8960f;--gold-glow:rgba(255,215,0,0.25);
+  --green:#22c55e;--red:#ef4444;
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+a{color:var(--gold);text-decoration:none;}a:hover{text-decoration:underline;}
+
+/* Nav */
+nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(10,15,10,0.95);backdrop-filter:blur(12px);z-index:100;}
+.logo{font-size:1.4rem;font-weight:800;letter-spacing:-0.5px;cursor:pointer;}
+.logo .claw{color:var(--gold);}
+.logo .horse{color:var(--accent-light);}
+.nav-right{display:flex;gap:0.8rem;align-items:center;}
+.plays-badge{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:0.35rem 0.8rem;font-size:0.8rem;font-weight:700;color:var(--gold);}
+.nav-btn{background:var(--gold);color:#000;border:none;padding:0.5rem 1.2rem;border-radius:8px;font-weight:700;font-size:0.85rem;cursor:pointer;transition:all 0.2s;}
+.nav-btn:hover{transform:scale(1.05);box-shadow:0 0 20px var(--gold-glow);}
+
+/* Hero */
+.hero{text-align:center;padding:3rem 1rem 1.5rem;max-width:700px;margin:0 auto;}
+.hero-emoji{font-size:4rem;margin-bottom:0.8rem;}
+.hero h1{font-size:2.4rem;font-weight:900;letter-spacing:-1px;margin-bottom:0.5rem;line-height:1.1;}
+.hero h1 .gold{color:var(--gold);}
+.hero h1 .green{color:var(--accent-light);}
+.hero p{color:var(--muted);font-size:1.05rem;line-height:1.5;max-width:500px;margin:0 auto;}
+.hero-stats{display:flex;gap:2rem;justify-content:center;margin-top:1.5rem;flex-wrap:wrap;}
+.hero-stat .val{font-size:1.5rem;font-weight:800;color:var(--gold);}
+.hero-stat .label{font-size:0.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;}
+
+/* Claw Machine */
+.machine-wrapper{max-width:500px;margin:2rem auto;padding:0 1rem;}
+.machine{background:linear-gradient(180deg,#0f1a0f 0%,#0a150a 100%);border:3px solid var(--gold);border-radius:20px;overflow:hidden;position:relative;}
+.machine-top{background:linear-gradient(135deg,var(--accent),#0f3f0f);padding:1rem;text-align:center;border-bottom:2px solid var(--gold);position:relative;overflow:hidden;}
+.machine-top h2{font-size:1.2rem;font-weight:900;color:var(--gold);text-shadow:0 0 20px var(--gold-glow);}
+.machine-top .lights{position:absolute;top:0;left:0;right:0;height:4px;background:repeating-linear-gradient(90deg,var(--gold) 0px,var(--gold) 10px,transparent 10px,transparent 20px);animation:marquee 2s linear infinite;}
+@keyframes marquee{to{background-position:20px 0;}}
+
+.play-area{position:relative;height:350px;background:linear-gradient(180deg,rgba(26,95,26,0.1),rgba(10,15,10,0.8));overflow:hidden;}
+
+/* Rail */
+.rail{position:absolute;top:0;left:0;right:0;height:30px;background:linear-gradient(180deg,#333,#222);border-bottom:2px solid var(--gold-dim);}
+.rail::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:2px;background:var(--gold);box-shadow:0 0 8px var(--gold-glow);}
+
+/* Claw arm */
+.claw-assembly{position:absolute;top:0;width:60px;left:calc(50% - 30px);z-index:10;transition:left 0.02s linear;}
+.claw-rope{width:4px;background:linear-gradient(180deg,#888,#666);margin:0 auto;height:30px;transition:height 0.8s ease-in-out;}
+.claw-head{width:50px;height:24px;margin:0 auto;position:relative;}
+.claw-body{width:20px;height:12px;background:linear-gradient(180deg,#ccc,#999);margin:0 auto;border-radius:4px 4px 0 0;}
+.claw-left,.claw-right{position:absolute;bottom:0;width:4px;height:20px;background:linear-gradient(180deg,#ccc,#888);border-radius:0 0 2px 2px;transition:transform 0.4s;}
+.claw-left{left:8px;transform-origin:top center;transform:rotate(-20deg);}
+.claw-right{right:8px;transform-origin:top center;transform:rotate(20deg);}
+.claw-assembly.grabbing .claw-left{transform:rotate(-5deg);}
+.claw-assembly.grabbing .claw-right{transform:rotate(5deg);}
+.claw-assembly.open .claw-left{transform:rotate(-35deg);}
+.claw-assembly.open .claw-right{transform:rotate(35deg);}
+
+/* Prizes in machine */
+.prize-pool{position:absolute;bottom:0;left:0;right:0;height:140px;display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-end;gap:8px;padding:10px;}
+.prize-item{font-size:2rem;animation:prizeFloat 3s ease-in-out infinite;cursor:default;filter:drop-shadow(0 0 6px rgba(255,215,0,0.3));}
+.prize-item:nth-child(odd){animation-delay:-1.5s;}
+@keyframes prizeFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+
+/* Glass reflection */
+.glass-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.03) 0%,transparent 40%,transparent 60%,rgba(255,255,255,0.02) 100%);pointer-events:none;z-index:5;}
+
+/* Drop zone */
+.machine-bottom{background:var(--surface);padding:1.2rem;border-top:2px solid var(--border);text-align:center;}
+.drop-btn{background:linear-gradient(135deg,var(--gold),var(--gold-dim));color:#000;border:none;padding:1rem 3rem;border-radius:14px;font-size:1.2rem;font-weight:900;cursor:pointer;transition:all 0.2s;letter-spacing:1px;text-transform:uppercase;box-shadow:0 4px 20px var(--gold-glow);}
+.drop-btn:hover{transform:scale(1.05);box-shadow:0 6px 30px var(--gold-glow);}
+.drop-btn:disabled{opacity:0.4;cursor:not-allowed;transform:none;box-shadow:none;}
+.drop-btn:active{transform:scale(0.97);}
+.plays-remaining{margin-top:0.8rem;font-size:0.8rem;color:var(--muted);}
+.plays-remaining span{color:var(--gold);font-weight:700;}
+
+/* Prize result overlay */
+.prize-result{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(6px);}
+.prize-result.show{display:flex;}
+.prize-modal{background:var(--surface);border:2px solid var(--gold);border-radius:20px;padding:2rem;text-align:center;max-width:380px;width:90%;animation:modalIn 0.3s;}
+@keyframes modalIn{from{opacity:0;transform:scale(0.9)}to{opacity:1;transform:scale(1)}}
+.prize-modal .icon{font-size:4rem;margin-bottom:0.5rem;}
+.prize-modal h3{font-size:1.5rem;font-weight:900;color:var(--gold);margin-bottom:0.3rem;}
+.prize-modal .desc{color:var(--muted);font-size:0.9rem;margin-bottom:1.2rem;}
+.prize-modal .value{font-size:1.1rem;font-weight:700;color:var(--green);margin-bottom:1rem;}
+.share-btn{background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:0.6rem 1.2rem;border-radius:10px;font-weight:700;font-size:0.85rem;cursor:pointer;transition:all 0.2s;margin:0 0.3rem;}
+.share-btn:hover{border-color:var(--gold);color:var(--gold);}
+.close-btn{background:var(--gold);color:#000;border:none;padding:0.6rem 1.5rem;border-radius:10px;font-weight:700;font-size:0.9rem;cursor:pointer;margin:0 0.3rem;}
+
+/* Prize Showcase */
+.showcase{max-width:800px;margin:3rem auto;padding:0 1rem;}
+.section-title{text-align:center;font-size:1.5rem;font-weight:900;margin-bottom:0.3rem;}
+.section-title .gold{color:var(--gold);}
+.section-sub{text-align:center;color:var(--muted);font-size:0.9rem;margin-bottom:1.5rem;}
+.prize-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;}
+.prize-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.2rem;text-align:center;transition:all 0.2s;}
+.prize-card:hover{border-color:var(--gold);transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,0,0,0.3);}
+.prize-card .emoji{font-size:2.5rem;margin-bottom:0.5rem;}
+.prize-card .name{font-weight:700;font-size:0.95rem;margin-bottom:0.2rem;}
+.prize-card .rarity{font-size:0.7rem;text-transform:uppercase;letter-spacing:1px;font-weight:700;padding:0.2rem 0.5rem;border-radius:6px;display:inline-block;}
+.rarity-common{color:var(--muted);background:rgba(106,122,106,0.15);}
+.rarity-rare{color:#3b82f6;background:rgba(59,130,246,0.15);}
+.rarity-epic{color:#a855f7;background:rgba(168,85,247,0.15);}
+.rarity-legendary{color:var(--gold);background:var(--gold-glow);}
+
+/* Leaderboard */
+.leaderboard{max-width:600px;margin:3rem auto;padding:0 1rem;}
+.lb-table{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
+.lb-table th{background:var(--surface2);color:var(--muted);font-size:0.7rem;text-transform:uppercase;letter-spacing:1px;padding:0.8rem 1rem;text-align:left;}
+.lb-table td{padding:0.7rem 1rem;border-top:1px solid var(--border);font-size:0.85rem;}
+.lb-table tr:hover{background:rgba(255,215,0,0.03);}
+.lb-rank{font-weight:800;color:var(--gold);width:50px;}
+.lb-name{font-weight:600;}
+.lb-score{color:var(--gold);font-weight:700;text-align:right;}
+
+/* How it works */
+.how{max-width:700px;margin:3rem auto;padding:0 1rem;}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-top:1.5rem;}
+.step{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.2rem;text-align:center;}
+.step .num{width:36px;height:36px;background:var(--gold);color:#000;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:1rem;margin:0 auto 0.8rem;}
+.step .title{font-weight:700;margin-bottom:0.3rem;}
+.step .desc{font-size:0.8rem;color:var(--muted);line-height:1.4;}
+
+/* Network promo */
+.network-promo{max-width:700px;margin:2rem auto;padding:0 1rem;}
+.promo-card{background:linear-gradient(135deg,rgba(26,95,26,0.15),rgba(255,215,0,0.05));border:1px solid var(--border);border-radius:14px;padding:1.5rem;text-align:center;}
+.promo-card h3{font-size:1.1rem;font-weight:800;margin-bottom:0.5rem;}
+.promo-card p{color:var(--muted);font-size:0.85rem;margin-bottom:1rem;}
+.promo-links{display:flex;gap:0.8rem;justify-content:center;flex-wrap:wrap;}
+.promo-link{background:var(--surface);border:1px solid var(--border);padding:0.5rem 1rem;border-radius:10px;font-size:0.8rem;font-weight:600;color:var(--text);transition:all 0.2s;text-decoration:none;}
+.promo-link:hover{border-color:var(--gold);color:var(--gold);text-decoration:none;}
+
+/* Footer */
+footer{border-top:1px solid var(--border);padding:2rem;text-align:center;margin-top:3rem;}
+.footer-brand{font-size:1.1rem;font-weight:800;margin-bottom:0.5rem;}
+.footer-brand .gold{color:var(--gold);}
+.footer-links{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:1rem;}
+.footer-links a{color:var(--muted);font-size:0.75rem;font-weight:600;text-decoration:none;}
+.footer-links a:hover{color:var(--gold);}
+.footer-sub{font-size:0.7rem;color:var(--muted);margin-bottom:0.5rem;}
+.footer-network{margin-top:1rem;}
+.footer-network-title{font-size:0.6rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:0.3rem;}
+.footer-network-links{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+.footer-network-links a{color:var(--muted);font-size:0.65rem;font-weight:600;text-decoration:none;}
+.footer-network-links a:hover{color:var(--gold);}
+
+/* Toast */
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);background:var(--gold);color:#000;padding:0.7rem 1.5rem;border-radius:10px;font-weight:700;font-size:0.85rem;z-index:300;transition:transform 0.3s;pointer-events:none;}
+.toast.show{transform:translateX(-50%) translateY(0);}
+
+/* Countdown reset */
+.reset-timer{text-align:center;margin-top:0.5rem;font-size:0.75rem;color:var(--muted);}
+.reset-timer span{color:var(--gold);font-weight:700;font-family:'Courier New',monospace;}
+
+/* Responsive */
+@media(max-width:640px){
+  nav{padding:0.8rem 1rem;}
+  .logo{font-size:1.1rem;}
+  .hero h1{font-size:1.6rem;}
+  .hero p{font-size:0.9rem;}
+  .hero-stats{gap:1rem;}
+  .play-area{height:280px;}
+  .drop-btn{padding:0.8rem 2rem;font-size:1rem;}
+  .prize-grid{grid-template-columns:repeat(2,1fr);}
+  .steps{grid-template-columns:1fr;}
+  footer{padding:1.5rem 1rem 5rem;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo"><span class="claw">CLAW</span>.<span class="horse">HORSE</span></div>
+  <div class="nav-right">
+    <div class="plays-badge" id="plays-badge">5 Plays Left</div>
+    <a href="https://spunk.bet" target="_blank" rel="noopener" class="nav-btn">Spunk.Bet</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-emoji">🐴🏆</div>
+  <h1><span class="gold">CLAW.HORSE</span> &mdash; The Free <span class="green">Claw Machine</span> Game</h1>
+  <p>Grab SPUNK runes, ordinal tokens, bonus plays and more. 5 free plays every day. No signup needed.</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="val" id="stat-grabs">0</div><div class="label">Total Grabs</div></div>
+    <div class="hero-stat"><div class="val" id="stat-prizes">0</div><div class="label">Prizes Won</div></div>
+    <div class="hero-stat"><div class="val" id="stat-players">0</div><div class="label">Players Today</div></div>
+  </div>
+</div>
+
+<!-- CLAW MACHINE -->
+<div class="machine-wrapper">
+  <div class="machine">
+    <div class="machine-top">
+      <div class="lights"></div>
+      <h2>GRAB A PRIZE</h2>
+    </div>
+    <div class="play-area" id="play-area">
+      <div class="rail"></div>
+      <div class="claw-assembly" id="claw">
+        <div class="claw-rope" id="claw-rope"></div>
+        <div class="claw-head">
+          <div class="claw-body"></div>
+          <div class="claw-left"></div>
+          <div class="claw-right"></div>
+        </div>
+      </div>
+      <div class="prize-pool" id="prize-pool"></div>
+      <div class="glass-overlay"></div>
+    </div>
+    <div class="machine-bottom">
+      <button class="drop-btn" id="drop-btn" onclick="dropClaw()">DROP THE CLAW</button>
+      <div class="plays-remaining">Plays remaining: <span id="plays-left">5</span> / 5</div>
+      <div class="reset-timer" id="reset-timer"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Prize Result Modal -->
+<div class="prize-result" id="prize-result" onclick="if(event.target===this)closePrize()">
+  <div class="prize-modal">
+    <div class="icon" id="result-icon">🎁</div>
+    <h3 id="result-title">You Won!</h3>
+    <div class="desc" id="result-desc">Amazing grab!</div>
+    <div class="value" id="result-value"></div>
+    <div>
+      <button class="close-btn" onclick="closePrize()">Play Again</button>
+      <button class="share-btn" id="share-x-btn" onclick="shareOnX()">Share on X</button>
+    </div>
+  </div>
+</div>
+
+<!-- Prize Showcase -->
+<div class="showcase">
+  <div class="section-title">Prize <span class="gold">Showcase</span></div>
+  <div class="section-sub">Every grab has a chance at these prizes</div>
+  <div class="prize-grid">
+    <div class="prize-card">
+      <div class="emoji">🪙</div>
+      <div class="name">500 SPUNK Runes</div>
+      <div class="rarity rarity-common">Common</div>
+    </div>
+    <div class="prize-card">
+      <div class="emoji">💰</div>
+      <div class="name">2,500 SPUNK Runes</div>
+      <div class="rarity rarity-rare">Rare</div>
+    </div>
+    <div class="prize-card">
+      <div class="emoji">🎟️</div>
+      <div class="name">+3 Bonus Plays</div>
+      <div class="rarity rarity-common">Common</div>
+    </div>
+    <div class="prize-card">
+      <div class="emoji">🔧</div>
+      <div class="name">Free Tool Access</div>
+      <div class="rarity rarity-rare">Rare</div>
+    </div>
+    <div class="prize-card">
+      <div class="emoji">🖼️</div>
+      <div class="name">Ordinal Token</div>
+      <div class="rarity rarity-epic">Epic</div>
+    </div>
+    <div class="prize-card">
+      <div class="emoji">🏆</div>
+      <div class="name">10,000 SPUNK Runes</div>
+      <div class="rarity rarity-epic">Epic</div>
+    </div>
+    <div class="prize-card">
+      <div class="emoji">🐴</div>
+      <div class="name">Rare Horse Ordinal</div>
+      <div class="rarity rarity-legendary">Legendary</div>
+    </div>
+    <div class="prize-card">
+      <div class="emoji">👑</div>
+      <div class="name">50,000 SPUNK Jackpot</div>
+      <div class="rarity rarity-legendary">Legendary</div>
+    </div>
+  </div>
+</div>
+
+<!-- How It Works -->
+<div class="how">
+  <div class="section-title">How It <span class="gold">Works</span></div>
+  <div class="section-sub">Simple, free, and fun</div>
+  <div class="steps">
+    <div class="step">
+      <div class="num">1</div>
+      <div class="title">Watch the Claw</div>
+      <div class="desc">The claw moves left and right automatically across the machine.</div>
+    </div>
+    <div class="step">
+      <div class="num">2</div>
+      <div class="title">Time Your Drop</div>
+      <div class="desc">Click DROP when the claw is over the prize you want.</div>
+    </div>
+    <div class="step">
+      <div class="num">3</div>
+      <div class="title">Win Prizes</div>
+      <div class="desc">The claw grabs a random prize. Rarer prizes = bigger rewards!</div>
+    </div>
+  </div>
+</div>
+
+<!-- Leaderboard -->
+<div class="leaderboard">
+  <div class="section-title">Top <span class="gold">Grabbers</span></div>
+  <div class="section-sub">Best claw operators this week</div>
+  <table class="lb-table">
+    <thead><tr><th>Rank</th><th>Player</th><th>Prizes Won</th></tr></thead>
+    <tbody id="lb-body">
+      <tr><td colspan="3" style="text-align:center;color:var(--muted);padding:1.5rem;">Play to appear on the leaderboard!</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Network Promo -->
+<div class="network-promo">
+  <div class="promo-card">
+    <h3>Part of the Spunk Network</h3>
+    <p>More free games, tools, and prizes across the network</p>
+    <div class="promo-links">
+      <a href="https://spunk.bet" target="_blank" rel="noopener" class="promo-link">Spunk.Bet Casino</a>
+      <a href="https://spunk.codes" target="_blank" rel="noopener" class="promo-link">Spunk.Codes Tools</a>
+      <a href="https://spunkart.com" target="_blank" rel="noopener" class="promo-link">SpunkArt.com</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-brand"><span class="gold">CLAW</span>.HORSE</div>
+  <div class="footer-sub">The Free Claw Machine Game &mdash; Powered by Spunk Network</div>
+  <div class="footer-links">
+    <a href="https://spunk.bet">Spunk.Bet</a>
+    <a href="https://spunk.codes">Spunk.Codes</a>
+    <a href="https://spunkart.com">SpunkArt.com</a>
+    <a href="https://x.com/SpunkArt13" target="_blank" rel="noopener">@SpunkArt13</a>
+  </div>
+  <div class="footer-network">
+    <div class="footer-network-title">Spunk Gaming Network</div>
+    <div class="footer-network-links">
+      <a href="https://spunk.bet">spunk.bet</a>
+      <a href="https://claw.horse" style="color:var(--gold);">claw.horse</a>
+      <a href="https://predict.horse">predict.horse</a>
+      <a href="https://predict.mom">predict.mom</a>
+    </div>
+  </div>
+  <div class="footer-network" style="margin-top:0.8rem;">
+    <div class="footer-network-title">Claw & Plush</div>
+    <div class="footer-network-links">
+      <a href="https://claw.pizza">claw.pizza</a>
+      <a href="https://plush.best">plush.best</a>
+      <a href="https://plush.cam">plush.cam</a>
+    </div>
+  </div>
+  <div style="margin-top:1rem;display:flex;justify-content:center;gap:1.2rem;flex-wrap:wrap;">
+    <a href="https://stake.com/?c=MyXSehCn" target="_blank" rel="noopener sponsored" style="color:#1475e1;font-size:0.65rem;font-weight:700;text-decoration:none;">Stake.com</a>
+    <a href="https://stake.us/?c=L2a8nG6c" target="_blank" rel="noopener sponsored" style="color:#00c74d;font-size:0.65rem;font-weight:700;text-decoration:none;">Stake.us</a>
+    <a href="https://shuffle.com?r=q94atl9m05" target="_blank" rel="noopener sponsored" style="color:#7c3aed;font-size:0.65rem;font-weight:700;text-decoration:none;">Shuffle</a>
+    <a href="https://coinbase.com/join/YAGES3X?src=referral-link" target="_blank" rel="noopener sponsored" style="color:#0052ff;font-size:0.65rem;font-weight:700;text-decoration:none;">Buy Crypto</a>
+    <a href="https://www.amazon.com/?tag=spunk01-20" target="_blank" rel="noopener sponsored" style="color:#ff9900;font-size:0.65rem;font-weight:700;text-decoration:none;">Shop Amazon</a>
+    <a href="https://winna.com/?r=Spunkeroo" target="_blank" rel="noopener sponsored" style="color:#ff5f1f;font-size:0.65rem;font-weight:700;text-decoration:none;">Winna.com</a>
+  </div>
+  <div style="margin-top:1rem;font-size:0.6rem;color:var(--muted);">&copy; 2025 Claw.Horse &mdash; Part of the <a href="https://spunk.bet" style="color:var(--gold);">Spunk Network</a></div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<!-- GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GVNL11PEGP"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-GVNL11PEGP');</script>
+<!-- Clarity -->
+<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","pn0x1z2y3w");</script>
+
+<script>
+// ========== CLAW MACHINE GAME ==========
+
+const PRIZES = [
+  { name: '500 SPUNK Runes', icon: '🪙', rarity: 'common', weight: 30, value: '500 SPUNK' },
+  { name: 'Empty Grab', icon: '💨', rarity: 'miss', weight: 20, value: 'Nothing this time' },
+  { name: '+1 Bonus Play', icon: '🎟️', rarity: 'common', weight: 15, value: '+1 extra play' },
+  { name: '2,500 SPUNK Runes', icon: '💰', rarity: 'rare', weight: 12, value: '2,500 SPUNK' },
+  { name: '+3 Bonus Plays', icon: '🎟️', rarity: 'common', weight: 8, value: '+3 extra plays' },
+  { name: 'Free Tool Access', icon: '🔧', rarity: 'rare', weight: 6, value: 'spunk.codes premium tool' },
+  { name: 'Ordinal Token', icon: '🖼️', rarity: 'epic', weight: 4, value: 'Bitcoin Ordinal Inscription' },
+  { name: '10,000 SPUNK Runes', icon: '🏆', rarity: 'epic', weight: 3, value: '10,000 SPUNK' },
+  { name: 'Rare Horse Ordinal', icon: '🐴', rarity: 'legendary', weight: 1.5, value: 'Rare Horse NFT' },
+  { name: '50,000 SPUNK Jackpot', icon: '👑', rarity: 'legendary', weight: 0.5, value: '50,000 SPUNK!!!' },
+];
+
+const POOL_EMOJIS = ['🪙','💰','🎟️','🔧','🖼️','🏆','🐴','👑','🪙','💰','🎟️','🪙','🪙','💰','🎟️'];
+
+const DAILY_PLAYS = 5;
+const STORAGE_KEY = 'claw_horse_data';
+
+let gameState = loadState();
+let clawX = 50; // percent
+let clawDir = 1;
+let clawMoving = true;
+let isDropping = false;
+let animFrame = null;
+let lastPrize = null;
+
+function loadState() {
+  try {
+    const d = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+    const today = new Date().toDateString();
+    if (d.date !== today) {
+      d.date = today;
+      d.plays = DAILY_PLAYS;
+    }
+    if (!d.totalGrabs) d.totalGrabs = 0;
+    if (!d.totalPrizes) d.totalPrizes = 0;
+    if (!d.leaderboard) d.leaderboard = [];
+    if (!d.playerName) d.playerName = 'Player_' + Math.random().toString(36).substr(2,4).toUpperCase();
+    return d;
+  } catch(e) {
+    return { date: new Date().toDateString(), plays: DAILY_PLAYS, totalGrabs: 0, totalPrizes: 0, leaderboard: [], playerName: 'Player_' + Math.random().toString(36).substr(2,4).toUpperCase() };
+  }
+}
+
+function saveState() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(gameState));
+}
+
+function updateUI() {
+  document.getElementById('plays-left').textContent = gameState.plays;
+  document.getElementById('plays-badge').textContent = gameState.plays + ' Plays Left';
+  document.getElementById('stat-grabs').textContent = gameState.totalGrabs.toLocaleString();
+  document.getElementById('stat-prizes').textContent = gameState.totalPrizes.toLocaleString();
+  // Simulated players count
+  const hour = new Date().getHours();
+  const base = 120 + (hour >= 9 && hour <= 22 ? hour * 8 : 30);
+  document.getElementById('stat-players').textContent = base.toLocaleString();
+
+  const btn = document.getElementById('drop-btn');
+  if (gameState.plays <= 0) {
+    btn.disabled = true;
+    btn.textContent = 'NO PLAYS LEFT';
+    showResetTimer();
+  } else {
+    btn.disabled = false;
+    btn.textContent = 'DROP THE CLAW';
+  }
+
+  renderLeaderboard();
+}
+
+function showResetTimer() {
+  const el = document.getElementById('reset-timer');
+  function tick() {
+    const now = new Date();
+    const tomorrow = new Date(now);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setHours(0,0,0,0);
+    const diff = tomorrow - now;
+    const h = Math.floor(diff/3600000);
+    const m = Math.floor((diff%3600000)/60000);
+    const s = Math.floor((diff%60000)/1000);
+    el.innerHTML = 'New plays in: <span>' + String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0') + '</span>';
+  }
+  tick();
+  setInterval(tick, 1000);
+}
+
+function initPrizePool() {
+  const pool = document.getElementById('prize-pool');
+  pool.innerHTML = '';
+  POOL_EMOJIS.forEach((e, i) => {
+    const el = document.createElement('div');
+    el.className = 'prize-item';
+    el.textContent = e;
+    el.style.animationDelay = (i * 0.2) + 's';
+    pool.appendChild(el);
+  });
+}
+
+// Claw movement
+function moveClaw() {
+  if (!clawMoving || isDropping) return;
+  const speed = 0.4;
+  clawX += speed * clawDir;
+  if (clawX >= 85) clawDir = -1;
+  if (clawX <= 15) clawDir = 1;
+  const claw = document.getElementById('claw');
+  claw.style.left = 'calc(' + clawX + '% - 30px)';
+  animFrame = requestAnimationFrame(moveClaw);
+}
+
+function pickPrize() {
+  const totalWeight = PRIZES.reduce((s, p) => s + p.weight, 0);
+  let r = Math.random() * totalWeight;
+  for (const p of PRIZES) {
+    r -= p.weight;
+    if (r <= 0) return p;
+  }
+  return PRIZES[0];
+}
+
+function dropClaw() {
+  if (isDropping || gameState.plays <= 0) return;
+  isDropping = true;
+  clawMoving = false;
+  gameState.plays--;
+  gameState.totalGrabs++;
+  saveState();
+  updateUI();
+
+  const claw = document.getElementById('claw');
+  const rope = document.getElementById('claw-rope');
+
+  // Drop animation
+  rope.style.height = '200px';
+  claw.classList.add('grabbing');
+
+  setTimeout(() => {
+    // Grab
+    const prize = pickPrize();
+    lastPrize = prize;
+
+    // Retract
+    setTimeout(() => {
+      rope.style.height = '30px';
+
+      setTimeout(() => {
+        claw.classList.remove('grabbing');
+        claw.classList.add('open');
+
+        setTimeout(() => {
+          claw.classList.remove('open');
+          isDropping = false;
+          clawMoving = true;
+          moveClaw();
+
+          // Show result
+          showPrizeResult(prize);
+        }, 400);
+      }, 800);
+    }, 600);
+  }, 800);
+}
+
+function showPrizeResult(prize) {
+  if (prize.rarity === 'miss') {
+    document.getElementById('result-icon').textContent = prize.icon;
+    document.getElementById('result-title').textContent = 'So Close!';
+    document.getElementById('result-desc').textContent = 'The claw slipped! Try again.';
+    document.getElementById('result-value').textContent = '';
+  } else {
+    gameState.totalPrizes++;
+    document.getElementById('result-icon').textContent = prize.icon;
+    document.getElementById('result-title').textContent = 'You Won!';
+    document.getElementById('result-desc').textContent = prize.name;
+    document.getElementById('result-value').textContent = prize.value;
+
+    // Handle bonus plays
+    if (prize.name === '+1 Bonus Play') {
+      gameState.plays += 1;
+    } else if (prize.name === '+3 Bonus Plays') {
+      gameState.plays += 3;
+    }
+
+    // Update leaderboard
+    updateLeaderboardEntry(prize);
+  }
+
+  saveState();
+  updateUI();
+  document.getElementById('prize-result').classList.add('show');
+
+  if (typeof gtag === 'function') {
+    gtag('event', 'claw_grab', { prize_name: prize.name, prize_rarity: prize.rarity });
+  }
+}
+
+function closePrize() {
+  document.getElementById('prize-result').classList.remove('show');
+}
+
+function shareOnX() {
+  if (!lastPrize || lastPrize.rarity === 'miss') return;
+  const text = encodeURIComponent('I won ' + lastPrize.name + ' on claw.horse! \uD83C\uDFAE @SpunkArt13\n\nPlay free: https://claw.horse');
+  window.open('https://x.com/intent/tweet?text=' + text, '_blank');
+  showToast('Sharing on X!');
+}
+
+function updateLeaderboardEntry(prize) {
+  const name = gameState.playerName;
+  let entry = gameState.leaderboard.find(e => e.name === name);
+  if (!entry) {
+    entry = { name: name, prizes: 0 };
+    gameState.leaderboard.push(entry);
+  }
+  entry.prizes++;
+  // Sort descending
+  gameState.leaderboard.sort((a, b) => b.prizes - a.prizes);
+  // Keep top 20
+  gameState.leaderboard = gameState.leaderboard.slice(0, 20);
+}
+
+function renderLeaderboard() {
+  const body = document.getElementById('lb-body');
+  if (gameState.leaderboard.length === 0) {
+    body.innerHTML = '<tr><td colspan="3" style="text-align:center;color:var(--muted);padding:1.5rem;">Play to appear on the leaderboard!</td></tr>';
+    return;
+  }
+  body.innerHTML = gameState.leaderboard.slice(0, 10).map((e, i) => {
+    const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : '#' + (i + 1);
+    return '<tr><td class="lb-rank">' + medal + '</td><td class="lb-name">' + e.name + '</td><td class="lb-score">' + e.prizes + '</td></tr>';
+  }).join('');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// Referral system
+(function(){
+  var p = new URLSearchParams(location.search);
+  var ref = p.get('ref') || p.get('r');
+  if (ref && /^[a-zA-Z0-9]{3,64}$/.test(ref)) {
+    if (!localStorage.getItem('claw_ref')) localStorage.setItem('claw_ref', ref);
+    if (typeof gtag === 'function') gtag('event', 'referral_visit', { referral_code: ref, source: 'claw_horse' });
+    history.replaceState({}, '', location.pathname);
+  }
+})();
+
+// Init
+initPrizePool();
+updateUI();
+moveClaw();
+
+// Heartbeat
+setInterval(function(){
+  if (typeof gtag === 'function') gtag('event', 'heartbeat', { source: 'claw_horse' });
+}, 10000);
+</script>
+
+<!-- Spunk Network Scripts -->
+<script src="https://spunk.codes/heartbeat.js" defer></script>
+<script src="https://spunk.codes/universal-referral.js" defer></script>
+<script src="https://spunkart.com/promo.js" data-sa-topbar="true" data-sa-footer="true" defer></script>
+<script src="https://spunk.codes/cross-promo.js" defer></script>
+
+</body>
+</html>
